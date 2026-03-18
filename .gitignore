@@ -1,0 +1,16 @@
+# Ficheiros do sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Uploads dos alunos (não versionar)
+uploads/*
+!uploads/.gitkeep
+
+# Ficheiros temporários
+*.tmp
+*.log
+
+# IDE
+.vscode/
+.idea/
