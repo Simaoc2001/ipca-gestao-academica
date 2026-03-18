@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Verificar se email já existe
             $check_email = mysqli_query($ligacao, "SELECT id FROM ficha_aluno WHERE email = '$email'");
             if ($check_email && mysqli_num_rows($check_email) > 0) {
-                $erro = "Este email já está registado no sistema.";
+                $erro = "Este email já está associado a outra conta.";
             } else {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             

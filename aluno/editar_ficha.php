@@ -36,6 +36,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($nome_completo) || empty($email) || empty($data_nascimento)) {
         $erro = "Preencha todos os campos obrigatórios.";
     } else {
+        // Verificar se email já está em uso por outro aluno
+        $check_email = mysqli_query($ligacao, "SELECT id FROM ficha_aluno WHERE email = '" . mysqli_real_escape_string($ligacao, $email) . "' AND login != '" . mysqli_real_escape_string($ligacao, $login) . "'");
+        if ($check_email && mysqli_num_rows($check_email) > 0) {
+            $erro = "Este email já está associado a outra conta.";
+        }
+        // Verificar se telefone já está em uso por outro aluno
+        if (empty($erro) && !empty($telefone)) {
+            $check_tel = mysqli_query($ligacao, "SELECT id FROM ficha_aluno WHERE telefone = '" . mysqli_real_escape_string($ligacao, $telefone) . "' AND telefone != '' AND login != '" . mysqli_real_escape_string($ligacao, $login) . "'");
+            if ($check_tel && mysqli_num_rows($check_tel) > 0) {
+                $erro = "Este número de telefone já está associado a outra conta.";
+            }
+        }
         // Processar upload da foto (se houver)
         $foto_path = $dados['foto'] ?? null; // manter a anterior se não for alterada
         if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
