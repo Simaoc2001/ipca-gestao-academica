@@ -11,6 +11,7 @@ if (!isset($_SESSION['login']) || $_SESSION['tipo'] != 'ALUNO') {
 $login = $_SESSION['login'];
 $erro = '';
 $sucesso = '';
+$aviso_obrigatorio = isset($_GET['obrigatorio']);
 
 // Buscar dados atuais da ficha (se existir)
 $ficha = mysqli_query($ligacao, "SELECT * FROM ficha_aluno WHERE login = '$login'");
@@ -120,6 +121,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h2>Editar Ficha</h2>
             <p>Preencha e atualize os seus dados pessoais.</p>
         </div>
+        <?php if ($aviso_obrigatorio): ?>
+            <div class="aviso" style="background:#fef3c7; border-left:4px solid #f59e0b; color:#92400e; padding:1rem 1.25rem; border-radius:0 8px 8px 0; margin-bottom:1.5rem; font-weight:500;">
+                ⚠️ Precisa de preencher e submeter a sua ficha antes de aceder ao painel. Complete os dados abaixo e clique em <strong>"Submeter"</strong>.
+            </div>
+        <?php endif; ?>
         <?php if ($erro): ?>
             <div class="erro"><?= $erro ?></div>
         <?php endif; ?>

@@ -15,6 +15,12 @@ $ficha = mysqli_query($ligacao, "SELECT * FROM ficha_aluno WHERE login = '$login
 $tem_ficha = mysqli_num_rows($ficha) > 0;
 $dados_ficha = $tem_ficha ? mysqli_fetch_assoc($ficha) : null;
 
+// Obrigar a preencher ficha se não existir, estiver em rascunho ou rejeitada
+if (!$tem_ficha || in_array($dados_ficha['estado'], ['rascunho', 'rejeitada'])) {
+    header('Location: editar_ficha.php?obrigatorio=1');
+    exit;
+}
+
 // Buscar nome do curso (se houver)
 $curso_nome = '';
 if ($tem_ficha && !empty($dados_ficha['curso_id'])) {
