@@ -14,3 +14,7 @@ uploads/*
 # IDE
 .vscode/
 .idea/
+
+# Documentos de entrega (não incluir no repo)
+apresentacao.html
+relatorio.html

@@ -240,5 +240,39 @@ if (mysqli_num_rows($check) == 0) {
         (5,23,2,1),(5,55,2,1),(5,56,2,1),(5,57,2,1),(5,58,2,1),(5,59,2,1),
         (5,24,2,2)
     ");
+
+    // ============================================================
+    // Dados de exemplo - Aluno com ficha, matrícula e notas
+    // ============================================================
+
+    // Ficha do aluno1 - aprovada (curso DWM)
+    mysqli_query($ligacao, "INSERT INTO `ficha_aluno` (`login`, `nome_completo`, `email`, `telefone`, `morada`, `data_nascimento`, `foto`, `curso_id`, `estado`, `data_submissao`, `data_validacao`, `validado_por`) VALUES
+        ('aluno1', 'Simão Costa', 'a35705@alunos.ipca.pt', '966558393', 'Rua dos Fornos, Vilarinho', '2001-12-02', NULL, 1, 'aprovada', '2026-02-10 10:30:00', '2026-02-12 14:00:00', 'Funcionario1')
+    ");
+
+    // Matrícula do aluno1 - aprovada no curso DWM
+    mysqli_query($ligacao, "INSERT INTO `pedidos_matricula` (`login_aluno`, `curso_id`, `curso_id2`, `curso_id3`, `data_pedido`, `estado`, `data_decisao`, `decisor_login`) VALUES
+        ('aluno1', 1, 3, NULL, '2026-02-13 09:00:00', 'aprovado', '2026-02-14 11:30:00', 'Funcionario1')
+    ");
+
+    // Pautas de exemplo - algumas disciplinas do 1.º ano DWM
+    mysqli_query($ligacao, "INSERT INTO `pautas` (`id`, `disciplina_id`, `epoca_id`, `ano_letivo`, `criado_por`) VALUES
+        (1, 6, 1, '2025/2026', 'gestor1'),
+        (2, 7, 1, '2025/2026', 'gestor1'),
+        (3, 8, 1, '2025/2026', 'gestor1'),
+        (4, 9, 1, '2025/2026', 'gestor1'),
+        (5, 12, 1, '2025/2026', 'gestor1'),
+        (6, 13, 1, '2025/2026', 'gestor1')
+    ");
+
+    // Notas do aluno1
+    mysqli_query($ligacao, "INSERT INTO `notas` (`pauta_id`, `aluno_login`, `nota`, `lancado_por`) VALUES
+        (1, 'aluno1', 15.0, 'gestor1'),
+        (2, 'aluno1', 12.5, 'gestor1'),
+        (3, 'aluno1', 17.0, 'gestor1'),
+        (4, 'aluno1', 14.0, 'gestor1'),
+        (5, 'aluno1', 16.5, 'gestor1'),
+        (6, 'aluno1', 13.0, 'gestor1')
+    ");
 }
 ?>
