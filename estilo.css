@@ -1215,7 +1215,6 @@ table td a {
 }
 .envelope-body {
     max-height: 0; overflow: hidden;
-    transition: max-height 0.3s ease;
 }
 .envelope-open .envelope-body, .envelope.open .envelope-body { max-height: 2000px; overflow-y: auto; }
 .envelope-open .envelope-toggle, .envelope.open .envelope-arrow { transform: rotate(180deg); }

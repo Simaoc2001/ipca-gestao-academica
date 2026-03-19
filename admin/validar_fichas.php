@@ -92,8 +92,16 @@ $processadas = mysqli_query($ligacao, "
         .envelope-arrow { font-size: 1.3rem; color: #94a3b8; transition: transform 0.2s; }
         .envelope.open .envelope-arrow { transform: rotate(180deg); }
         .envelope-body {
-            padding: 0 1.5rem 1.5rem;
+            padding: 0 1.5rem;
             border-top: 1px solid #f1f5f9;
+            max-height: 0;
+            overflow: hidden;
+            transition: none;
+        }
+        .envelope.open .envelope-body {
+            max-height: 2000px;
+            padding: 1rem 1.5rem 1.5rem;
+            overflow: visible;
         }
         .envelope.open .envelope-front { background: #fafbfc; }
 
