@@ -38,14 +38,17 @@ if (!empty($curso_id)) {
     }
 }
 
-// Verificar se já existe pedido pendente para este aluno
-$pedido_existente = mysqli_query($ligacao, "SELECT * FROM pedidos_matricula WHERE login_aluno = '$login' AND estado = 'pendente'");
-$tem_pedido_pendente = mysqli_num_rows($pedido_existente) > 0;
+// Verificar se já existe pedido pendente ou aprovado para este aluno
+$pedido_existente = mysqli_query($ligacao, "SELECT * FROM pedidos_matricula WHERE login_aluno = '$login' AND estado IN ('pendente', 'aprovado')");
+$tem_pedido_bloqueante = mysqli_num_rows($pedido_existente) > 0;
+$pedido_bloqueante = $tem_pedido_bloqueante ? mysqli_fetch_assoc($pedido_existente) : null;
 
 // Processar submissão do pedido
 if (isset($_POST['fazer_pedido'])) {
-    if ($tem_pedido_pendente) {
-        $erro = "Já existe um pedido pendente. Aguarde a validação.";
+    if ($tem_pedido_bloqueante) {
+        $erro = $pedido_bloqueante['estado'] == 'aprovado' 
+            ? "Já está matriculado. Não pode submeter outro pedido." 
+            : "Já existe um pedido pendente. Aguarde a validação.";
     } else {
         $curso_1 = (int) ($_POST['curso_1'] ?? 0);
         $curso_2 = (int) ($_POST['curso_2'] ?? 0);
@@ -120,7 +123,11 @@ $pedidos = mysqli_query($ligacao, "
 
         <?php if (!empty($erro_ficha)): ?>
             <p>Complete e aprove sua ficha antes de fazer pedido de matrícula.</p>
-        <?php elseif (!$tem_pedido_pendente): ?>
+        <?php elseif ($tem_pedido_bloqueante && $pedido_bloqueante['estado'] == 'aprovado'): ?>
+            <div class="sucesso">✅ Já está matriculado. Não é possível submeter outro pedido.</div>
+        <?php elseif ($tem_pedido_bloqueante && $pedido_bloqueante['estado'] == 'pendente'): ?>
+            <p>Já possui um pedido pendente. Aguarde a validação pelos serviços académicos.</p>
+        <?php else: ?>
             <form method="POST">
                 <p>Escolha os três cursos por ordem de prioridade (1 = mais importante).</p>
                 <label>1ª Prioridade</label>
@@ -148,8 +155,6 @@ $pedidos = mysqli_query($ligacao, "
                 </select>
                 <button type="submit" name="fazer_pedido" class="btn">Solicitar Matrícula</button>
             </form>
-        <?php else: ?>
-            <p>Já possui um pedido pendente. Aguarde a validação pelos serviços académicos.</p>
         <?php endif; ?>
 
         <hr>
