@@ -137,11 +137,9 @@ $processados = mysqli_query($ligacao, "
         .envelope-arrow { font-size: 1.3rem; color: #94a3b8; transition: transform 0.2s; }
         .envelope.open .envelope-arrow { transform: rotate(180deg); }
         .envelope-body {
-            display: none;
             padding: 0 1.5rem 1.5rem;
             border-top: 1px solid #f1f5f9;
         }
-        .envelope.open .envelope-body { display: block; }
         .prioridade-list { list-style: none; padding: 0; margin: 1rem 0; }
         .prioridade-list li {
             display: flex; align-items: center; gap: 0.75rem;

@@ -1217,8 +1217,8 @@ table td a {
     max-height: 0; overflow: hidden;
     transition: max-height 0.3s ease;
 }
-.envelope-open .envelope-body { max-height: 600px; overflow-y: auto; }
-.envelope-open .envelope-toggle { transform: rotate(180deg); }
+.envelope-open .envelope-body, .envelope.open .envelope-body { max-height: 2000px; overflow-y: auto; }
+.envelope-open .envelope-toggle, .envelope.open .envelope-arrow { transform: rotate(180deg); }
 .envelope-body table { margin: 0; border-radius: 0; }
 
 /* ===== CHECKLIST ===== */

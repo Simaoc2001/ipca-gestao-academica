@@ -92,11 +92,9 @@ $processadas = mysqli_query($ligacao, "
         .envelope-arrow { font-size: 1.3rem; color: #94a3b8; transition: transform 0.2s; }
         .envelope.open .envelope-arrow { transform: rotate(180deg); }
         .envelope-body {
-            display: none;
             padding: 0 1.5rem 1.5rem;
             border-top: 1px solid #f1f5f9;
         }
-        .envelope.open .envelope-body { display: block; }
         .envelope.open .envelope-front { background: #fafbfc; }
 
         .ficha-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 1.5rem; margin: 1rem 0; font-size: 0.88rem; }
