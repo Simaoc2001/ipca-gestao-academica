@@ -124,8 +124,6 @@ $disciplinas = mysqli_query($ligacao, "SELECT * FROM disciplinas ORDER BY Nome_d
                 </div>
             </form>
         <?php endif; ?>
-            </div>
-        </form>
 
         <h3>Disciplinas Existentes</h3>
         <table>
