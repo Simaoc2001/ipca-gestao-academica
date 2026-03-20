@@ -36,6 +36,16 @@ if (isset($_POST['criar_pauta'])) {
     }
 }
 
+// Processar eliminação de pauta
+if (isset($_GET['eliminar_pauta'])) {
+    $id_pauta = (int)$_GET['eliminar_pauta'];
+    // Eliminar notas associadas primeiro, depois a pauta
+    mysqli_query($ligacao, "DELETE FROM notas WHERE pauta_id = $id_pauta");
+    mysqli_query($ligacao, "DELETE FROM pautas WHERE id = $id_pauta");
+    header('Location: gerir_pautas.php');
+    exit;
+}
+
 // Buscar listas para selects
 $disciplinas = mysqli_query($ligacao, "SELECT ID, Nome_disc FROM disciplinas ORDER BY Nome_disc");
 $epocas = mysqli_query($ligacao, "SELECT id, nome FROM epocas ORDER BY id");
@@ -206,6 +216,7 @@ while ($p = mysqli_fetch_assoc($pautas)) {
                                     <td><?= date('d/m/Y H:i', strtotime($p['data_criacao'])) ?></td>
                                     <td>
                                         <a href="lancar_notas.php?pauta_id=<?= $p['id'] ?>" class="btn btn-sm">🎯 Lançar Notas</a>
+                                        <a href="?eliminar_pauta=<?= $p['id'] ?>" class="btn btn-sm btn-outline" onclick="return confirm('Eliminar esta pauta e todas as notas associadas?')">🗑 Eliminar</a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
